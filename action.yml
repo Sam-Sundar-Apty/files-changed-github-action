@@ -1,0 +1,19 @@
+name: 'HasFolderChanged'
+description: 'Check if folder has changed'
+author: 'Sai Umesh Dhanewar'
+inputs:
+  TARGET_BRANCH:
+    description: "TARGET_BRANCH"
+    required: true
+  CURRENT_BRANCH:
+    description: "CURRENT_BRANCH"
+    required: true
+  COMPARE_PATH:
+    description: "COMPARE_PATH"
+    required: true
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
+outputs:
+   CHANGED:
+    description: has files changed
