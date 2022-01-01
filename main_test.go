@@ -1,13 +1,10 @@
 package main
 
 import (
-	"bytes"
-	"os"
+	"os/exec"
 	"testing"
-	"time"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/actions-go/toolkit/core"
 )
 
 const (
@@ -23,19 +20,10 @@ const (
 )
 
 func TestRunMain(t *testing.T) {
-	w := bytes.NewBuffer(nil)
-	now = func() time.Time {
-		return time.Date(2020, 01, 10, 20, 10, 20, 1, time.UTC)
+	outout, err := exec.Command("git", "diff", "development", "feature/LSP-0000/checking-if-files-changed", "--", "./scripts", "./scripts").Output()
+	if err != nil {
+		t.Errorf("Error running command: %s", err.Error())
+		return
 	}
-	core.SetStdout(w)
-	runMain()
-	w.String()
-	assert.Equal(t, errorOutput, w.String())
-	os.Setenv("INPUT_MILLISECONDS", "10")
-
-	w = bytes.NewBuffer(nil)
-	core.SetStdout(w)
-	runMain()
-	w.String()
-	assert.Equal(t, successOutput, w.String())
+	assert.Equal(t, errorOutput, string(outout))
 }
