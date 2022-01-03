@@ -29,7 +29,7 @@ func runMain() {
 		os.Exit(1)
 	}
 
-	command := fmt.Sprintf("git diff development feature/LSP-0000/checking-if-files-changed -- ./scripts ./scripts")
+	command := fmt.Sprintf("git diff ",targetBranch," "currentBranch," -- ",comparePath," "comparePath)
 
 	cmd, err := cmd.RunCommand(command)
 	if err != nil {
